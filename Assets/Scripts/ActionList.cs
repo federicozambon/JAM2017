@@ -11,10 +11,9 @@ public class ActionList : MonoBehaviour
 [System.Serializable]
 public class SceneVariable
 {
+    public SpriteRenderer[] sr;
     public string minuteAndHalf;
     public string matchResult;
     public bool[] frameList;
     public GameObject[] frameGo;
 }
-
-
