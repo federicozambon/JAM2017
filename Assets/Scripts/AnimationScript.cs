@@ -3,14 +3,16 @@ using System.Collections;
 
 public class AnimationScript : MonoBehaviour
 {
-    public Vector3 startTransform;
-    public Vector3 startRot;
+    private Vector3 startTransform;
+    private Vector3 startRot;
     public Transform endTransform;
     GameController gc;
     public bool toAnimate, toAnimateReplay;
+    UiController ui;
 
     void Awake()
     {
+        ui = FindObjectOfType<UiController>();
         gc = FindObjectOfType<GameController>();  
     }
 
@@ -32,6 +34,8 @@ public class AnimationScript : MonoBehaviour
         {
             float timer = 0;
 
+            gc = FindObjectOfType<GameController>();
+
             while (timer <= gc.animationTime)
             {
                 timer += Time.deltaTime;
@@ -47,17 +51,23 @@ public class AnimationScript : MonoBehaviour
         ResetPositions();
         if (toAnimateReplay)
         {
+            ui.replay.SetActive(true);
+            ui.whistleBtn.gameObject.SetActive(false);
+            ui.timeSlider.gameObject.SetActive(false);
             float timer = 0;
 
             while (timer <= gc.animationTime*2)
             {
-                startTransform = new Vector3(startTransform.x, startTransform.y, -1);
-                endTransform.position = new Vector3(endTransform.position.x, endTransform.position.y, -1);
+                startTransform = new Vector3(startTransform.x, startTransform.y, startTransform.z);
+                endTransform.position = new Vector3(endTransform.position.x, endTransform.position.y, endTransform.position.z);
                 timer += Time.deltaTime;
                 this.transform.eulerAngles = Vector3.Lerp(startTransform, endTransform.eulerAngles, timer/2);
                 this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer/2);
                 yield return null;
             }
+            ui.whistleBtn.gameObject.SetActive(true);
+            ui.timeSlider.gameObject.SetActive(true);
+            ui.replay.SetActive(false);
         }
     }
 }

@@ -11,17 +11,12 @@ public class MusicManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-    }
-
-	void Start ()
-    {
         aS = GetComponent<AudioSource>();
-	}
-	
+    }	
 	// Update is called once per frame
 	public void PlayActionMusic()
     {
-        int randomClip = Random.Range(0, 3);
+        int randomClip = Random.Range(0, 2);
 
         aS.Stop();
         aS.clip = musicClipArray[randomClip];

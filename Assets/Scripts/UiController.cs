@@ -8,8 +8,10 @@ public class UiController : MonoBehaviour
     public Slider timeSlider;
     public float timeToAnswer = 2f;
     float timer = 0f;
-    public GameObject allRight;
-    public GameObject noFault;
+    public Text allRight;
+    public Text noFault;
+    public Text faultFound;
+    public Text faultMissed;
     public Text firstTeam;
     public Text secondTeam;
     public Text result;
@@ -17,11 +19,12 @@ public class UiController : MonoBehaviour
     public Text half;
     public Text currentPlayerScore;
     public Button whistleBtn;
+    public GameObject replay;
 
     void Awake()
     {
-        allRight.GetComponent<Text>().text = "Tutto regolare";
-        noFault.GetComponent<Text>().text = "Cosa hai fischiato?";
+        allRight.text = "Tutto regolare";
+        noFault.text = "Cosa hai fischiato?";
         gc = FindObjectOfType<GameController>();
     }
 
