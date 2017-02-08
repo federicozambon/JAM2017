@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     UiController ui;
     ActionList aList;
+    MusicManager mM;
 
     GameObject currentGameObject;
     Coroutine myCoroutine;
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
+        mM = FindObjectOfType<MusicManager>();
         ui = FindObjectOfType<UiController>();
         aList = GetComponent<ActionList>();
     }
@@ -31,13 +33,18 @@ public class GameController : MonoBehaviour
 
     IEnumerator ShowFrame()
     {
-        foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>())
+        mM.PlayActionMusic();
+
+        foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>(true))
         {
             StartCoroutine(player.AnimationHandler());
+            player.toAnimateReplay = true;
+            player.toAnimate = false;
         }
     
         yield return new WaitForSeconds(animationTime);
         myTimerCo = StartCoroutine(ui.Timer());
+      
     }
 
     public void CheckAnswer(bool hasPlayerWhistled)
@@ -117,26 +124,25 @@ public class GameController : MonoBehaviour
 
     void CorrectAnswer(bool isFault)
     {
+        mM.PlayFeedbackMusic(1);
         currentPlayerScore++;
         ui.currentPlayerScore.text = "Player Score: " + currentPlayerScore.ToString();
         if (isFault)
         {
-            StartCoroutine(ShowFault());
-            //PlayCorrectSfx();
+            StartCoroutine(ShowFault());       
         }
         else
         {
             StartCoroutine(ShowNoFaultCorrect());
-            //PlayCorrectSfx();
         }
     }
 
     void WrongAnswer(bool isFault)
     {
+        mM.PlayFeedbackMusic(0);
         if (isFault)
         {
             StartCoroutine(ShowNoFaultWrong());
-            //PlayWrongSfx();
         }
         else
         {
@@ -147,7 +153,12 @@ public class GameController : MonoBehaviour
     IEnumerator ShowFault()
     {
         currentGameObject.transform.FindChild("Circle").gameObject.SetActive(true);
-        StartCoroutine(currentGameObject.transform.FindChild("Circle").GetComponent<AnimationScript>().ReplayHandler());
+        foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>(true))
+        {
+            StartCoroutine(player.GetComponent<AnimationScript>().ReplayHandler());
+        }
+
+   
         yield return new WaitForSeconds(3f);
         NextFrame();
     }
