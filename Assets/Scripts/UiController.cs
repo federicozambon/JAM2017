@@ -10,8 +10,11 @@ public class UiController : MonoBehaviour
     float timer = 0f;
     public GameObject allRight;
     public GameObject noFault;
-    public Text timeAndHalf;
-    public Text matchResult;
+    public Text firstTeam;
+    public Text secondTeam;
+    public Text result;
+    public Text minute;
+    public Text half;
     public Text currentPlayerScore;
     public Button whistleBtn;
 
