@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     int currentPlayerScore = 0;
     int currentAction = -1;
     int currentFrame = -1;
+    public float animationTime = 1;
+    public bool activeAnimation;
 
     void Awake()
     {
@@ -29,7 +31,12 @@ public class GameController : MonoBehaviour
 
     IEnumerator ShowFrame()
     {
-        yield return new WaitForSeconds(1f);
+        foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>())
+        {
+            StartCoroutine(player.AnimationHandler());
+        }
+    
+        yield return new WaitForSeconds(animationTime);
         myTimerCo = StartCoroutine(ui.Timer());
     }
 

@@ -6,7 +6,7 @@ public class UiController : MonoBehaviour
 {
     GameController gc;
     public Slider timeSlider;
-    public float timeToAnswer = 3f;
+    public float timeToAnswer = 2f;
     float timer = 0f;
     public GameObject allRight;
     public GameObject noFault;
