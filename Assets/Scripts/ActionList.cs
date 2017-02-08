@@ -17,5 +17,6 @@ public class SceneVariable
     public string minute;
     public string half;
     public bool[] frameList;
+    public bool[] sceneToSkip;
     public GameObject[] frameGo;
 }

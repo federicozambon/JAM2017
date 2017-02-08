@@ -52,13 +52,10 @@ public class AnimationScript : MonoBehaviour
         if (toAnimateReplay)
         {
             ui.replay.SetActive(true);
-            ui.whistleBtn.gameObject.SetActive(false);
-            ui.timeSlider.gameObject.SetActive(false);
             float timer = 0;
 
             while (timer <= gc.animationTime*2)
             {
-                Debug.Log(this.gameObject);
                 startTransform = new Vector3(startTransform.x, startTransform.y, startTransform.z);
                 endTransform.position = new Vector3(endTransform.position.x, endTransform.position.y, endTransform.position.z);
                 timer += Time.deltaTime;
@@ -66,8 +63,7 @@ public class AnimationScript : MonoBehaviour
                 this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer/2);
                 yield return null;
             }
-            ui.whistleBtn.gameObject.SetActive(true);
-            ui.timeSlider.gameObject.SetActive(true);
+            
             ui.replay.SetActive(false);
         }
     }

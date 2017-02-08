@@ -59,11 +59,13 @@ public class UiController : MonoBehaviour
     {
         if (gc.myTimerCo != null)
         {
-            whistleBtn.interactable = true;
+            timeSlider.gameObject.SetActive(true);
+            whistleBtn.gameObject.SetActive(true);
         }
         else
         {
-            whistleBtn.interactable = false;
+            timeSlider.gameObject.SetActive(false);
+            whistleBtn.gameObject.SetActive(false);
         }
 	}
 }

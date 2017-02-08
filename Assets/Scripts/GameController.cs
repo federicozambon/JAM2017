@@ -46,8 +46,14 @@ public class GameController : MonoBehaviour
         }
     
         yield return new WaitForSeconds(animationTime);
-        myTimerCo = StartCoroutine(ui.Timer());
-      
+        if (!aList.actionList[currentAction].sceneToSkip[currentFrame])
+        {
+            myTimerCo = StartCoroutine(ui.Timer());
+        }
+        else
+        {
+            NextFrame();
+        }
     }
 
     public void CheckAnswer(bool hasPlayerWhistled)
@@ -135,6 +141,7 @@ public class GameController : MonoBehaviour
         ui.currentPlayerScore.text = "Player Score: " + currentPlayerScore.ToString();
         if (isFault)
         {
+            StartCoroutine(FaultFound());
             StartCoroutine(ShowFault()); 
                   
         }
@@ -153,6 +160,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            StartCoroutine(FaultMissed());
             StartCoroutine(ShowFault());
         }
     }
