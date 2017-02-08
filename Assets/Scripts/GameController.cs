@@ -38,8 +38,11 @@ public class GameController : MonoBehaviour
         foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>(true))
         {
             StartCoroutine(player.AnimationHandler());
-            player.toAnimateReplay = true;
-            player.toAnimate = false;
+            if (player.toAnimate)
+            {
+                player.toAnimateReplay = true;
+                player.toAnimate = false;
+            }
         }
     
         yield return new WaitForSeconds(animationTime);

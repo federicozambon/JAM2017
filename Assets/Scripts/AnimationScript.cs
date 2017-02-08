@@ -58,6 +58,7 @@ public class AnimationScript : MonoBehaviour
 
             while (timer <= gc.animationTime*2)
             {
+                Debug.Log(this.gameObject);
                 startTransform = new Vector3(startTransform.x, startTransform.y, startTransform.z);
                 endTransform.position = new Vector3(endTransform.position.x, endTransform.position.y, endTransform.position.z);
                 timer += Time.deltaTime;
