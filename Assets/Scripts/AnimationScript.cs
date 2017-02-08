@@ -20,14 +20,17 @@ public class AnimationScript : MonoBehaviour
 
     public IEnumerator AnimationHandler()
     {
-        float timer = 0;
-
-        while (timer <= gc.animationTime)
+        if (toAnimate)
         {
-            timer += Time.deltaTime;
-            this.transform.eulerAngles = Vector3.Lerp(startTransform, endTransform.eulerAngles, timer);
-            this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer);
-            yield return null;
-        }  
+            float timer = 0;
+
+            while (timer <= gc.animationTime)
+            {
+                timer += Time.deltaTime;
+                this.transform.eulerAngles = Vector3.Lerp(startTransform, endTransform.eulerAngles, timer);
+                this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer);
+                yield return null;
+            }
+        }
     }
 }
