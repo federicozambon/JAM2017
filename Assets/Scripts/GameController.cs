@@ -111,8 +111,11 @@ public class GameController : MonoBehaviour
             }
             currentGameObject = aList.actionList[currentAction].frameGo[0];
             currentFrame = 0;
-            ui.timeAndHalf.text = aList.actionList[currentAction].minuteAndHalf;
-            ui.matchResult.text = aList.actionList[currentAction].matchResult;
+            ui.firstTeam.text = aList.actionList[currentAction].firstTeam;
+            ui.secondTeam.text = aList.actionList[currentAction].secondTeam;
+            ui.result.text = aList.actionList[currentAction].matchResult;
+            ui.minute.text = aList.actionList[currentAction].minute;
+            ui.half.text = aList.actionList[currentAction].half;
             currentGameObject.SetActive(true);
             myCoroutine = StartCoroutine(ShowFrame());
         }

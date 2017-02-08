@@ -10,9 +10,12 @@ public class ActionList : MonoBehaviour
 
 [System.Serializable]
 public class SceneVariable
-{ 
-    public string minuteAndHalf;
+{
+    public string firstTeam;
     public string matchResult;
+    public string secondTeam;
+    public string minute;
+    public string half;
     public bool[] frameList;
     public GameObject[] frameGo;
 }
