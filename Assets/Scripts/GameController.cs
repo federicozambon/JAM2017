@@ -12,8 +12,9 @@ public class GameController : MonoBehaviour
     Coroutine myCoroutine;
     public Coroutine myTimerCo;
 
+    public string startingAction;
     int currentPlayerScore = 0;
-    int currentAction = -1;
+    public int currentAction = -1;
     int currentFrame = -1;
     public float animationTime = 1;
     public bool activeAnimation;
@@ -27,7 +28,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        currentGameObject = GameObject.Find("Action1");
+        currentGameObject = GameObject.Find(startingAction);
+        currentGameObject.transform.FindChild("Frame1").gameObject.SetActive(true);
         NextAction();
     }
 
