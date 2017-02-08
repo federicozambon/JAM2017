@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            //LOADSCORESCENE
+            SceneManager.LoadScene("Score");
         }
     }
 
@@ -140,6 +140,7 @@ public class GameController : MonoBehaviour
     {
         mM.PlayFeedbackMusic(1);
         currentPlayerScore++;
+        mM.score++;
         ui.currentPlayerScore.text = "Player Score: " + currentPlayerScore.ToString();
         if (isFault)
         {

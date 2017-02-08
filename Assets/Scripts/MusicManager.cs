@@ -7,6 +7,7 @@ public class MusicManager : MonoBehaviour
     public AudioClip[] musicClipArray;
     public AudioClip[] feedbackClipArray;
     public AudioClip whistleClip;
+    public int score;
 
     void Awake()
     {
