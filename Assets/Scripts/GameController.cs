@@ -132,7 +132,8 @@ public class GameController : MonoBehaviour
         ui.currentPlayerScore.text = "Player Score: " + currentPlayerScore.ToString();
         if (isFault)
         {
-            StartCoroutine(ShowFault());       
+            StartCoroutine(ShowFault()); 
+                  
         }
         else
         {
@@ -153,9 +154,31 @@ public class GameController : MonoBehaviour
         }
     }
 
+    IEnumerator FaultFound()
+    {
+        ui.faultFound.transform.parent.transform.parent.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        ui.faultFound.transform.parent.transform.parent.gameObject.SetActive(false);
+    }
+
+    IEnumerator FaultMissed()
+    {
+        ui.faultMissed.transform.parent.transform.parent.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        ui.faultMissed.transform.parent.transform.parent.gameObject.SetActive(false);
+    }
+
     IEnumerator ShowFault()
     {
-        currentGameObject.transform.FindChild("Circle").gameObject.SetActive(true);
+        if (currentGameObject.transform.FindChild("Circle"))
+        {
+            currentGameObject.transform.FindChild("Circle").gameObject.SetActive(true);
+        }
+        if (currentGameObject.transform.FindChild("Line"))
+        {
+            currentGameObject.transform.FindChild("Line").gameObject.SetActive(true);
+        }
+
         foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>(true))
         {
             StartCoroutine(player.GetComponent<AnimationScript>().ReplayHandler());
@@ -168,17 +191,17 @@ public class GameController : MonoBehaviour
 
     IEnumerator ShowNoFaultCorrect()
     {
-        ui.allRight.SetActive(true);
+        ui.allRight.transform.parent.transform.parent.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
-        ui.allRight.SetActive(false);
+        ui.allRight.transform.parent.transform.parent.gameObject.SetActive(false);
         NextFrame();
     }
 
     IEnumerator ShowNoFaultWrong()
     {
-        ui.noFault.SetActive(true);
+        ui.noFault.transform.parent.transform.parent.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
-        ui.noFault.SetActive(false);
+        ui.noFault.transform.parent.transform.parent.gameObject.SetActive(false);
         NextFrame();
     }
 }
