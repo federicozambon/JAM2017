@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreScene : MonoBehaviour
 {
@@ -12,14 +13,24 @@ public class ScoreScene : MonoBehaviour
 
     void Awake()
     {
-        score = FindObjectOfType<MusicManager>().score;
+        if (FindObjectOfType<MusicManager>())
+        {
+            score = FindObjectOfType<MusicManager>().score;
+        }
+        else
+        {
+            score = 1   ;
+        }
     }
 
 	void Start ()
     {
         if (score>5)
         {
-            arbitroGood.SetActive(true);
+            arbitroGood.SetActive(true); 
+        }
+        else
+        {
             arbitroBad.SetActive(true);
         }
 
@@ -62,4 +73,9 @@ public class ScoreScene : MonoBehaviour
 
         voto.text = "VOTO: " + score.ToString();
 	}
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
