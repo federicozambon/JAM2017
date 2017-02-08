@@ -3,18 +3,14 @@ using System.Collections;
 
 public class AnimationScript : MonoBehaviour
 {
-    private Vector3 startTransform;
+    public Vector3 startTransform;
     public Transform endTransform;
     GameController gc;
-    public bool toAnimate;
+    public bool toAnimate, toAnimateReplay;
 
     void Awake()
     {
         gc = FindObjectOfType<GameController>();
-    }
-
-    void Start()
-    {
         startTransform = this.transform.position;
     }
 
@@ -26,6 +22,24 @@ public class AnimationScript : MonoBehaviour
 
             while (timer <= gc.animationTime)
             {
+                timer += Time.deltaTime;
+                this.transform.eulerAngles = Vector3.Lerp(startTransform, endTransform.eulerAngles, timer);
+                this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer);
+                yield return null;
+            }
+        }
+    }
+
+    public IEnumerator ReplayHandler()
+    {
+        if (toAnimateReplay)
+        {
+            float timer = 0;
+
+            while (timer <= gc.animationTime)
+            {
+                startTransform = new Vector3(startTransform.x, startTransform.y, -1);
+                endTransform.position = new Vector3(endTransform.position.x, endTransform.position.y, -1);
                 timer += Time.deltaTime;
                 this.transform.eulerAngles = Vector3.Lerp(startTransform, endTransform.eulerAngles, timer);
                 this.transform.position = Vector3.Lerp(startTransform, endTransform.position, timer);

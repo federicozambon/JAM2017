@@ -147,6 +147,7 @@ public class GameController : MonoBehaviour
     IEnumerator ShowFault()
     {
         currentGameObject.transform.FindChild("Circle").gameObject.SetActive(true);
+        StartCoroutine(currentGameObject.transform.FindChild("Circle").GetComponent<AnimationScript>().ReplayHandler());
         yield return new WaitForSeconds(3f);
         NextFrame();
     }
