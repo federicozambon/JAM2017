@@ -11,6 +11,6 @@ public class AutomaticResize : MonoBehaviour
     {
         float myY = this.transform.localPosition.y+5;
         this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,this.transform.position.y);
-        this.transform.localScale = new Vector3(perspectiveMulti/ myY, perspectiveMulti/ myY, 5); 
+        this.transform.localScale = new Vector3(perspectiveMulti/ myY, perspectiveMulti/ myY, 1); 
 	}
 }

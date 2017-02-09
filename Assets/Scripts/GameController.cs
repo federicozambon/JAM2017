@@ -29,14 +29,18 @@ public class GameController : MonoBehaviour
     void Start()
     {
         currentGameObject = GameObject.Find(startingAction);
+        
         currentGameObject.transform.FindChild("Frame1").gameObject.SetActive(true);
-        NextAction();
+        StartCoroutine(NextAction());
     }
 
     IEnumerator ShowFrame()
     {
-        mM.PlayActionMusic();
-
+        if (!mM.aS.isPlaying)
+        {
+            mM.PlayActionMusic();
+        }
+       
         foreach (var player in aList.actionList[currentAction].frameGo[currentFrame].GetComponentsInChildren<AnimationScript>(true))
         {
             StartCoroutine(player.AnimationHandler());
@@ -58,9 +62,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    Coroutine answered;
+
     public void CheckAnswer(bool hasPlayerWhistled)
     {
-        StartCoroutine(CheckAnswerCo(hasPlayerWhistled));
+        if (answered == null)
+        {
+            answered = StartCoroutine(CheckAnswerCo(hasPlayerWhistled));
+        }   
     }
 
 	public IEnumerator CheckAnswerCo(bool hasPlayerWhistled)
@@ -93,6 +102,7 @@ public class GameController : MonoBehaviour
                 WrongAnswer(false);
             }
         }
+        answered = null;      
 	}
 	
 	void NextFrame()
@@ -107,13 +117,20 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            NextAction();
+            StartCoroutine(NextAction());
         }
 	}
 
-    void NextAction()
+    IEnumerator NextAction()
     {
-        if (currentAction < aList.actionList.Length-1)
+        ui.intermezzoCo = StartCoroutine(ui.Intermezzo());
+
+        while (ui.intermezzoCo != null)
+        {
+            yield return null;
+        }     
+
+        if (currentAction < 9)
         {        
             currentAction++;
             if (currentAction != 0)
@@ -128,6 +145,7 @@ public class GameController : MonoBehaviour
             ui.minute.text = aList.actionList[currentAction].minute;
             ui.half.text = aList.actionList[currentAction].half;
             currentGameObject.SetActive(true);
+            ui.intermezzo.SetActive(false);
             myCoroutine = StartCoroutine(ShowFrame());
         }
         else
@@ -145,8 +163,7 @@ public class GameController : MonoBehaviour
         if (isFault)
         {
             StartCoroutine(FaultFound());
-            StartCoroutine(ShowFault()); 
-                  
+            StartCoroutine(ShowFault());                  
         }
         else
         {
@@ -184,12 +201,15 @@ public class GameController : MonoBehaviour
 
     IEnumerator ShowFault()
     {
+
         if (currentGameObject.transform.FindChild("Circle"))
         {
+            Debug.Log("foundcircle");
             currentGameObject.transform.FindChild("Circle").gameObject.SetActive(true);
         }
         if (currentGameObject.transform.FindChild("Line"))
         {
+            Debug.Log("foundline");
             currentGameObject.transform.FindChild("Line").gameObject.SetActive(true);
         }
 

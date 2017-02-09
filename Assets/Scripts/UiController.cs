@@ -20,6 +20,8 @@ public class UiController : MonoBehaviour
     public Text currentPlayerScore;
     public Button whistleBtn;
     public GameObject replay;
+    public GameObject intermezzo;
+    public Coroutine intermezzoCo;
 
     void Awake()
     {
@@ -30,13 +32,24 @@ public class UiController : MonoBehaviour
 
     public bool isPushed;
 
+    public IEnumerator Intermezzo()
+    {
+        intermezzo.GetComponentInChildren<Text>().text = "Azione " + (gc.currentAction+2).ToString();
+        intermezzo.SetActive(true);
+        yield return new WaitForSeconds(3);
+       
+        intermezzoCo = null;
+    }
+
     public void PushedButton()
     {
+        FindObjectOfType<MusicManager>().PlayWhistle();
         isPushed = true;
     }
 
 	public IEnumerator Timer()
     {
+     
         isPushed = false;
         timer = 0;
         timeSlider.value = 1;

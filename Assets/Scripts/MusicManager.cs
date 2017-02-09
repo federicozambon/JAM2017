@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MusicManager : MonoBehaviour
 {
-    AudioSource aS;
+    public AudioSource aS;
     public AudioClip[] musicClipArray;
     public AudioClip[] feedbackClipArray;
     public AudioClip whistleClip;
