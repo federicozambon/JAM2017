@@ -16,7 +16,7 @@ public class ScoreScene : MonoBehaviour
         if (FindObjectOfType<MusicManager>())
         {
             float tempScore = FindObjectOfType<MusicManager>().score;
-            score = (int)Mathf.Floor(tempScore/12f*10f);
+            score = (int)Mathf.Floor(tempScore/11f*10f);
         }
         else
         {

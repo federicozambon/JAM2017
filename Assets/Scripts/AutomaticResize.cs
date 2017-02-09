@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+
 [ExecuteInEditMode]
 public class AutomaticResize : MonoBehaviour
 {
